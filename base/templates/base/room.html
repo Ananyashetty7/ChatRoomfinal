@@ -140,6 +140,13 @@
     </div>
     <!--  End -->
   </div>
+
+  {% if request.user == room.host %}
+    <form method="GET" action="{% url 'delete-room' room.id %}">
+        <button type="submit" class="btn btn-danger">Delete Room</button>
+    </form>
+{% endif %}
+
 </main>
 <script src="script.js"></script>
 {% endblock content %}

@@ -5,7 +5,12 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.contrib.auth import authenticate, login, logout
 from .models import Room, Topic, Message, User
+from django.shortcuts import get_object_or_404
 from .forms import RoomForm, UserForm, MyUserCreationForm
+
+
+from django.http import HttpResponseForbidden
+
 
 # Create your views here.
 
@@ -153,17 +158,6 @@ def updateRoom(request, pk):
     return render(request, 'base/room_form.html', context)
 
 
-@login_required(login_url='login')
-def deleteRoom(request, pk):
-    room = Room.objects.get(id=pk)
-
-    if request.user != room.host:
-        return HttpResponse('Your are not allowed here!!')
-
-    if request.method == 'POST':
-        room.delete()
-        return redirect('home')
-    return render(request, 'base/delete.html', {'obj': room})
 
 
 @login_required(login_url='login')
@@ -202,3 +196,15 @@ def topicsPage(request):
 def activityPage(request):
     room_messages = Message.objects.all()
     return render(request, 'base/activity.html', {'room_messages': room_messages})
+
+
+
+@login_required
+def delete_room(request, pk):
+    room = get_object_or_404(Room, id=pk)
+    if request.user == room.host:
+        if request.method == 'POST':
+            room.delete()
+            return redirect('home')
+    return render(request, 'base/delete_confirm.html', {'room': room})
+
