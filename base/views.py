@@ -199,12 +199,24 @@ def activityPage(request):
 
 
 
+
 @login_required
 def delete_room(request, pk):
+    # Get the room object or return 404 if it doesn't exist
     room = get_object_or_404(Room, id=pk)
+    
+    # Check if the logged-in user is the host of the room
     if request.user == room.host:
+        # If it's a POST request, delete the room
         if request.method == 'POST':
             room.delete()
-            return redirect('home')
-    return render(request, 'base/delete_confirm.html', {'room': room})
+            messages.success(request, f'Room "{room.name}" deleted successfully.')
+            return redirect('home')  # Redirect to home after deletion
+
+        # If it's not a POST request, just render the confirmation page
+        return render(request, 'base/delete_confirm.html', {'room': room})
+    
+    # If the user is not the host, show an error message and redirect to home
+    messages.error(request, 'You are not the host of this room and cannot delete it.')
+    return redirect('home')
 
