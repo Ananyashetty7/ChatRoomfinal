@@ -82,6 +82,28 @@ a {
   box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.15);
   font-weight: 500;
 }
+/* Delete button styles */
+.btn-danger {
+  background-color:#71c6dd;
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  font-size: 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-right: 10px
+}
+
+.btn-danger:hover {
+  background-color:#bfedf9;
+}
+
+.inline-form {
+  display: inline-block; /* Ensures the delete button stays in line with other elements */
+  margin-right: 10px; /* Add space between "Joined" and "Delete" button */
+}
+
 
 .btn--link {
   border-radius: 0;
@@ -623,7 +645,8 @@ a {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2.4rem;
+  margin-bottom: 3rem;
+  padding: 20px 20px;
 }
 
 .roomList__header h2 {
