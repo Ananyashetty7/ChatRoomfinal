@@ -1,0 +1,40 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<div class="message-container">
+    <h2>{{ message }}</h2>
+    <form action="{% url redirect_url %}">
+        <button type="submit">OK</button>
+    </form>
+</div>
+{% endblock %}
+
+{% block styles %}
+<style>
+    .message-container {
+        text-align: center;
+        padding: 20px;
+        background: white;
+        border: 2px solid #ddd;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        border-radius: 8px;
+        margin-top: 100px;
+    }
+    .message-container h2 {
+        color: #333;
+        margin-bottom: 20px;
+    }
+    .message-container button {
+        padding: 10px 20px;
+        font-size: 16px;
+        color: white;
+        background-color: #007bff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    .message-container button:hover {
+        background-color: #0056b3;
+    }
+</style>
+{% endblock %}

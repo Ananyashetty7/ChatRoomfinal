@@ -1120,7 +1120,7 @@ a {
   margin-top: 0.5rem;
 }
 
-.room__message {
+/* .room__message {
   padding: 2rem;
   position: absolute;
   z-index: 111;
@@ -1148,6 +1148,64 @@ a {
 
 .room__message > form > input::placeholder {
   color: var(--color-light-gray);
+}
+*/
+
+.room__message {
+  padding: 2rem;
+  position: absolute;
+  z-index: 111;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #696d97;
+  display: flex; /* Use flexbox to arrange input and button */
+  align-items: center;
+  gap: 1rem; /* Add space between input and button */
+}
+
+.room__message > form {
+  display: flex;
+  flex: 1; /* Ensure the input takes most of the space */
+  align-items: center;
+}
+
+.room__message > form > input {
+  resize: none;
+  background-color: var(--color-dark-light);
+  color: var(--color-light);
+  border: none;
+  outline: none;
+  border-radius: 0.7rem;
+  height: 4.5rem;
+  flex-grow: 1; /* Make the input expand to occupy available space */
+  margin-top: -1rem;
+  padding: 1.2rem;
+  font-size: 1.4rem;
+  font-weight: 500;
+}
+
+.room__message > form > input::placeholder {
+  color: var(--color-light-gray);
+}
+
+.room__message > form > button {
+  background-color: rgb(152, 220, 243);
+  color: var(--color-light);
+  border: none;
+  outline: none;
+  border-radius: 0.7rem;
+  height: 4.5rem;
+  width: auto;
+  padding: 0 1.5rem;
+  cursor: pointer;
+  font-size: 1.4rem;
+  font-weight: 500;
+  transition: background-color 0.3s;
+}
+
+.room__message > form > button:hover {
+  background-color: var(--color-light-gray);
 }
 
 .participants__top span {
@@ -1186,3 +1244,85 @@ a {
   color: var(--color-main);
   font-weight: 1.4rem;
 }
+
+.message-pane {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #f9f9f9;
+  border-top: 1px solid #ddd;
+  padding: 10px;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  display: flex; /* Use flexbox to arrange children */
+  align-items: center;
+  gap: 10px; /* Add space between textarea and button */
+}
+
+.message-pane textarea {
+  flex-grow: 1; /* Make the textarea take the available space */
+  height: 40px;
+  border-radius: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  resize: none;
+  outline: none;
+}
+
+.message-pane button {
+  width: 80px; /* Adjust width as needed */
+  height: 42px;
+  border: none;
+  border-radius: 20px;
+  background-color: #4caf50;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.message-pane button:hover {
+  background-color: #45a049;
+}
+
+/* Style for the message panel */
+.message-panel {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-size: 20px;
+  font-weight: bold;
+  z-index: 9999;
+  width: 60%;
+  text-align: center;
+}
+
+.message-panel-success {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.message-panel-error {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.message-panel button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.message-panel button:hover {
+  background-color: #0056b3;
+}
+

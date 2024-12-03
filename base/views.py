@@ -7,20 +7,25 @@ from django.contrib.auth import authenticate, login, logout
 from .models import Room, Topic, Message, User
 from django.shortcuts import get_object_or_404
 from .forms import RoomForm, UserForm, MyUserCreationForm
-
-
 from django.http import HttpResponseForbidden
+import re
 
+# Utility function to convert plain-text URLs to clickable links
+def linkify(text):
+    url_pattern = re.compile(r'(https?://[^\s]+)')
+    return url_pattern.sub(r'<a href="\1" target="_blank">\1</a>', text)
 
-# Create your views here.
+# Utility function to render centralized messages
+def render_center_message(request, message, redirect_url):
+    """
+    Utility function to render a centralized message with an 'OK' button.
+    """
+    return render(request, 'base/message_center.html', {
+        'message': message,
+        'redirect_url': redirect_url
+    })
 
-# rooms = [
-#     {'id': 1, 'name': 'Lets learn python!'},
-#     {'id': 2, 'name': 'Design with me'},
-#     {'id': 3, 'name': 'Frontend developers'},
-# ]
-
-
+# Login page
 def loginPage(request):
     page = 'login'
     if request.user.is_authenticated:
@@ -33,7 +38,7 @@ def loginPage(request):
         try:
             user = User.objects.get(email=email)
         except:
-            messages.error(request, 'User does not exist')
+            return render_center_message(request, 'User does not exist', 'login')
 
         user = authenticate(request, email=email, password=password)
 
@@ -41,16 +46,14 @@ def loginPage(request):
             login(request, user)
             return redirect('home')
         else:
-            messages.error(request, 'Username OR password does not exit')
+            return render_center_message(request, 'Username OR password does not exist', 'login')
 
     context = {'page': page}
     return render(request, 'base/login_register.html', context)
 
-
 def logoutUser(request):
     logout(request)
-    return redirect('home')
-
+    return render_center_message(request, 'You have been logged out successfully.', 'home')
 
 def registerPage(request):
     form = MyUserCreationForm()
@@ -62,12 +65,11 @@ def registerPage(request):
             user.username = user.username.lower()
             user.save()
             login(request, user)
-            return redirect('home')
+            return render_center_message(request, 'Registration successful! Welcome to the platform.', 'home')
         else:
-            messages.error(request, 'An error occurred during registration')
+            return render_center_message(request, 'An error occurred during registration. Please try again.', 'register')
 
     return render(request, 'base/login_register.html', {'form': form})
-
 
 def home(request):
     q = request.GET.get('q') if request.GET.get('q') != None else ''
@@ -87,17 +89,25 @@ def home(request):
                'room_count': room_count, 'room_messages': room_messages}
     return render(request, 'base/home.html', context)
 
-
 def room(request, pk):
     room = Room.objects.get(id=pk)
     room_messages = room.message_set.all()
     participants = room.participants.all()
 
     if request.method == 'POST':
+        # Handle text submission
+        message_body = request.POST.get('body')
+        file = request.FILES.get('file')
+
+        # Convert plain-text URLs to clickable links
+        linked_body = linkify(message_body)
+
+        # Create the message object
         message = Message.objects.create(
             user=request.user,
             room=room,
-            body=request.POST.get('body')
+            body=linked_body,
+            file=file
         )
         room.participants.add(request.user)
         return redirect('room', pk=room.id)
@@ -105,7 +115,6 @@ def room(request, pk):
     context = {'room': room, 'room_messages': room_messages,
                'participants': participants}
     return render(request, 'base/room.html', context)
-
 
 def userProfile(request, pk):
     user = User.objects.get(id=pk)
@@ -115,7 +124,6 @@ def userProfile(request, pk):
     context = {'user': user, 'rooms': rooms,
                'room_messages': room_messages, 'topics': topics}
     return render(request, 'base/profile.html', context)
-
 
 @login_required(login_url='login')
 def createRoom(request):
@@ -131,11 +139,10 @@ def createRoom(request):
             name=request.POST.get('name'),
             description=request.POST.get('description'),
         )
-        return redirect('home')
+        return render_center_message(request, 'Room created successfully.', 'home')
 
     context = {'form': form, 'topics': topics}
     return render(request, 'base/room_form.html', context)
-
 
 @login_required(login_url='login')
 def updateRoom(request, pk):
@@ -143,7 +150,7 @@ def updateRoom(request, pk):
     form = RoomForm(instance=room)
     topics = Topic.objects.all()
     if request.user != room.host:
-        return HttpResponse('Your are not allowed here!!')
+        return HttpResponse('You are not allowed here!!')
 
     if request.method == 'POST':
         topic_name = request.POST.get('topic')
@@ -157,21 +164,18 @@ def updateRoom(request, pk):
     context = {'form': form, 'topics': topics, 'room': room}
     return render(request, 'base/room_form.html', context)
 
-
-
-
 @login_required(login_url='login')
 def deleteMessage(request, pk):
-    message = Message.objects.get(id=pk)
+    message = get_object_or_404(Message, id=pk)
 
     if request.user != message.user:
-        return HttpResponse('Your are not allowed here!!')
+        return render_center_message(request, 'You are not allowed to delete this message.', 'home')
 
     if request.method == 'POST':
         message.delete()
-        return redirect('home')
-    return render(request, 'base/delete.html', {'obj': message})
+        return render_center_message(request, 'Message deleted successfully.', 'home')
 
+    return render(request, 'base/delete.html', {'obj': message})
 
 @login_required(login_url='login')
 def updateUser(request):
@@ -182,41 +186,30 @@ def updateUser(request):
         form = UserForm(request.POST, request.FILES, instance=user)
         if form.is_valid():
             form.save()
-            return redirect('user-profile', pk=user.id)
+            return render_center_message(request, 'Your profile has been updated successfully.', f'user-profile/{user.id}')
+        else:
+            return render_center_message(request, 'There was an error updating your profile. Please try again.', 'update-user')
 
     return render(request, 'base/update-user.html', {'form': form})
-
 
 def topicsPage(request):
     q = request.GET.get('q') if request.GET.get('q') != None else ''
     topics = Topic.objects.filter(name__icontains=q)
     return render(request, 'base/topics.html', {'topics': topics})
 
-
 def activityPage(request):
     room_messages = Message.objects.all()
     return render(request, 'base/activity.html', {'room_messages': room_messages})
 
-
-
-
 @login_required
 def delete_room(request, pk):
-    # Get the room object or return 404 if it doesn't exist
     room = get_object_or_404(Room, id=pk)
-    
-    # Check if the logged-in user is the host of the room
+
     if request.user == room.host:
-        # If it's a POST request, delete the room
         if request.method == 'POST':
             room.delete()
-            messages.success(request, f'Room "{room.name}" deleted successfully.')
-            return redirect('home')  # Redirect to home after deletion
+            return render_center_message(request, f'Room "{room.name}" deleted successfully.', 'home')
 
-        # If it's not a POST request, just render the confirmation page
         return render(request, 'base/delete_confirm.html', {'room': room})
-    
-    # If the user is not the host, show an error message and redirect to home
-    messages.error(request, 'You are not the host of this room and cannot delete it.')
-    return redirect('home')
 
+    return render_center_message(request, 'You are not the host of this room and cannot delete it.', 'home')

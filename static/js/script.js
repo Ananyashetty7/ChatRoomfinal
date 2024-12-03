@@ -43,6 +43,31 @@
 // }
 
 // Menu
+// Function to show the message panel
+function showMessage(message, type = 'error') {
+  const messagePanel = document.createElement('div');
+  messagePanel.classList.add('message-panel');
+
+  if (type === 'success') {
+      messagePanel.classList.add('message-panel-success');
+  } else {
+      messagePanel.classList.add('message-panel-error');
+  }
+
+  messagePanel.innerHTML = `
+      <p>${message}</p>
+      <button onclick="closeMessage()">OK</button>
+  `;
+  document.body.appendChild(messagePanel);
+}
+
+// Function to close the message panel
+function closeMessage() {
+  const messagePanel = document.querySelector('.message-panel');
+  if (messagePanel) {
+      messagePanel.remove();
+  }
+}
 
 const dropdownMenu = document.querySelector(".dropdown-menu");
 const dropdownButton = document.querySelector(".dropdown-button");
