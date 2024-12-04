@@ -1,17 +1,17 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap");
 
 :root {
-  --color-main: #71c6dd;
-  --color-main-light: #e1f6fb;
-  --color-dark: #3f4156;
-  --color-dark-medium: #51546e;
-  --color-dark-light: #696d97;
-  --color-light: #e5e5e5;
-  --color-gray: #8b8b8b;
-  --color-light-gray: #b2bdbd;
-  --color-bg: #2d2d39;
-  --color-success: #5dd693;
-  --color-error: #fc4b0b;
+  --color-main: #ffffff; /* Primary color - white */
+  --color-main-light: #d9d9d9; /* Light variant of white */
+  --color-dark: #000000; /* Dark color - black */
+  --color-dark-medium: #4d4d4d; /* Medium dark */
+  --color-dark-light: #666666; /* Lighter black/gray */
+  --color-light: #f5f5f5; /* Light gray */
+  --color-gray: #b3b3b3; /* Medium gray */
+  --color-light-gray: #cccccc; /* Lighter gray */
+  --color-bg: #1a1a1a; /* Background - dark gray */
+  --color-success: #d9d9d9; /* Success color - light gray */
+  --color-error: #ffffff; /* Error color - white */
 }
 
 /*========== base styles ==========*/
@@ -312,7 +312,11 @@ a {
 .header__logo > h1 {
   font-weight: 700;
   font-size: 2rem;
-  color: var(--color-light);
+  background-image: linear-gradient(45deg, #F58529, #DD2A7B, #8134AF, #515BD4);
+  -webkit-background-clip: text;  /* Webkit-specific version */
+    background-clip: text;  /* Standard version */
+  color: transparent;
+  font-weight: bold;
 }
 
 .header__search > label {
@@ -1120,37 +1124,6 @@ a {
   margin-top: 0.5rem;
 }
 
-/* .room__message {
-  padding: 2rem;
-  position: absolute;
-  z-index: 111;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: transparent;
-}
-
-.room__message > form > input {
-  resize: none;
-  background-color: var(--color-dark-light);
-  color: var(--color-light);
-  border: none;
-  outline: none;
-  border-radius: 0.7rem;
-  height: 4.5rem;
-  width: 100%;
-  margin-top: -1rem;
-  padding: 1.2rem;
-  font-size: 1.4rem;
-  font-weight: 500;
-  position: relative;
-}
-
-.room__message > form > input::placeholder {
-  color: var(--color-light-gray);
-}
-*/
-
 .room__message {
   padding: 2rem;
   position: absolute;
@@ -1325,4 +1298,3 @@ a {
 .message-panel button:hover {
   background-color: #0056b3;
 }
-
