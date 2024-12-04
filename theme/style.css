@@ -630,7 +630,7 @@ a {
 .roomList__header h2 {
   text-transform: uppercase;
   font-weight: 500;
-  color: var(--color-light);
+  color: var(--color-main);
   letter-spacing: 1px;
 }
 

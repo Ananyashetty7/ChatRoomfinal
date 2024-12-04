@@ -14,6 +14,21 @@
   --color-error: #ffffff; /* Error color - white */
 }
 
+:root.light-mode {
+  --color-main: #da0c0c;
+  --color-main-light: #333333;
+  --color-dark: #efeded;
+  --color-diff:#6f2282;
+  --color-dark-medium: #cccccc;
+  --color-dark-light: #000000;
+  --color-light: #f5f5f5;
+  --color-gray: #000000;
+  --color-light-gray: #000000;
+  --color-bg: #ffffff;
+  --color-success: #4caf50;
+  --color-error: #f44336;
+}
+
 /*========== base styles ==========*/
 
 * {
@@ -84,7 +99,7 @@ a {
 }
 /* Delete button styles */
 .btn-danger {
-  background-color:#71c6dd;
+  background-color:#040708;
   color: #fff;
   border: none;
   padding: 6px 12px;
@@ -96,7 +111,7 @@ a {
 }
 
 .btn-danger:hover {
-  background-color:#bfedf9;
+  background-color:#000000;
 }
 
 .inline-form {
@@ -659,7 +674,9 @@ a {
   color: var(--color-light);
   letter-spacing: 1px;
 }
-
+:root.light-mode .roomList__header h2 {
+  color: #0f782d; /* Black text in light mode */
+}
 .roomList__header p {
   font-weight: 500;
   color: var(--color-dark-light);
@@ -714,7 +731,7 @@ a {
   font-size: 2rem;
   font-weight: 500;
   margin-bottom: 1.5rem;
-  color: var(--color-light);
+  color: var(--color-diff);
   transition: all 0.3s ease-in-out;
 }
 
@@ -772,7 +789,10 @@ a {
   letter-spacing: 1px;
   font-size: 1.4rem;
 }
-
+:root.light-mode .activities__header h2 {
+  background-color: #b9b9b9;
+  color: #000000; /* Black text in light mode */
+}
 .activities__box {
   margin: 1.5rem;
   padding: 1.5rem;
@@ -1298,3 +1318,22 @@ a {
 .message-panel button:hover {
   background-color: #0056b3;
 }
+   
+#theme-toggle {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1000;
+  font-size: 1.2rem; /* Reduced font size */
+  padding: 1rem 1rem; /* Reduced padding */
+  background-color: var(--color-main);
+  color: var(--color-dark);
+  border: 3px solid var(--color-gray);
+  border-radius: 2rem; /* Smaller border radius */
+  cursor: pointer;
+}
+
+#theme-toggle:hover {
+  opacity: 0.8;
+}
+

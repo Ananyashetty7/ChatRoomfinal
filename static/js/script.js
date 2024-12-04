@@ -78,6 +78,29 @@ if (dropdownButton) {
   });
 }
 
+// Theme Toggle: Apply globally to the website
+document.addEventListener('DOMContentLoaded', () => {
+  // Check for the theme toggle button
+  const themeToggle = document.getElementById('theme-toggle');
+
+  // Set default theme if localStorage is empty
+  const currentTheme = localStorage.getItem('theme') || 'dark-mode';
+  document.documentElement.className = currentTheme;
+
+  if (!themeToggle) {
+    console.warn('Theme toggle button not found.');
+    return; // Exit if the button is not found
+  }
+
+  // Add click event listener to toggle theme
+  themeToggle.addEventListener('click', () => {
+    const newTheme = document.documentElement.className === 'dark-mode' ? 'light-mode' : 'dark-mode';
+    document.documentElement.className = newTheme;
+    localStorage.setItem('theme', newTheme);
+  });
+});
+
+
 // Upload Image
 const photoInput = document.querySelector("#avatar");
 const photoPreview = document.querySelector("#preview-avatar");
