@@ -4,14 +4,14 @@
   --color-main: #ffffff; /* Primary color - white */
   --color-main-light: #d9d9d9; /* Light variant of white */
   --color-dark: #000000; /* Dark color - black */
-  --color-dark-medium: #4d4d4d; /* Medium dark */
-  --color-dark-light: #666666; /* Lighter black/gray */
+  --color-dark-medium: #6c2951; /* Medium dark */
+  --color-dark-light: #7661aa; /* Lighter black/gray */
   --color-light: #f5f5f5; /* Light gray */
-  --color-gray: #b3b3b3; /* Medium gray */
+  --color-gray: #bc6814; /* Medium gray */
   --color-light-gray: #cccccc; /* Lighter gray */
   --color-bg: #1a1a1a; /* Background - dark gray */
-  --color-success: #d9d9d9; /* Success color - light gray */
-  --color-error: #ffffff; /* Error color - white */
+  --color-success: #469f49; /* Success color - light gray */
+  --color-error: #f44336; /* Error color - white */
 }
 
 :root.light-mode {
@@ -20,10 +20,10 @@
   --color-dark: #efeded;
   --color-diff:#6f2282;
   --color-dark-medium: #cccccc;
-  --color-dark-light: #000000;
+  --color-dark-light: #7661aa;
   --color-light: #f5f5f5;
   --color-gray: #000000;
-  --color-light-gray: #000000;
+  --color-light-gray: #5c20b2;
   --color-bg: #ffffff;
   --color-success: #4caf50;
   --color-error: #f44336;
@@ -547,7 +547,6 @@ a {
   font-weight: 500;
   outline: none;
 }
-
 .form__group input:focus,
 .form__group textarea:focus {
   border-color: var(--color-main);
@@ -1151,12 +1150,14 @@ a {
   bottom: 0;
   left: 0;
   right: 0;
-  background: #696d97;
+  background: #000000;
   display: flex; /* Use flexbox to arrange input and button */
   align-items: center;
   gap: 1rem; /* Add space between input and button */
 }
-
+:root.light-mode .room__message {
+  background: #efeded ;
+}
 .room__message > form {
   display: flex;
   flex: 1; /* Ensure the input takes most of the space */
@@ -1172,7 +1173,6 @@ a {
   border-radius: 0.7rem;
   height: 4.5rem;
   flex-grow: 1; /* Make the input expand to occupy available space */
-  margin-top: -1rem;
   padding: 1.2rem;
   font-size: 1.4rem;
   font-weight: 500;
@@ -1182,19 +1182,49 @@ a {
   color: var(--color-light-gray);
 }
 
+.room__message > form > input[type="file"]::-webkit-file-upload-button {
+  background-color:  rgb(181, 49, 168); /* Desired color for the clickable button */
+  color: #fff; /* Text color */
+  border: 2px solid rgb(188, 175, 186); /* Border color */
+  border-radius: 0.5rem; /* Rounded corners */
+  padding: 0.5rem 1rem; /* Button padding */
+  font-size: 1rem; /* Font size */
+  cursor: pointer; /* Pointer cursor for hover effect */
+  transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
+.room__message > form > input[type="file"]::-webkit-file-upload-button:hover {
+  background-color: rgb(0, 0, 0); /* Change color on hover */
+}
+
+:root.light-mode .room__message > form > input[type="file"]::-webkit-file-upload-button {
+  background-color: #c31d1d;
+  color: #ffffff; /* Light theme text color */
+  border: 2px solid #888; /* Light theme border */
+}
+
+:root.light-mode .room__message > form > input[type="file"]::-webkit-file-upload-button:hover {
+  background-color: rgb(200, 200, 200); /* Hover color in light mode */
+}
+
 .room__message > form > button {
-  background-color: rgb(152, 220, 243);
+  background-color: rgb(181, 49, 168);
   color: var(--color-light);
-  border: none;
-  outline: none;
   border-radius: 0.7rem;
   height: 4.5rem;
-  width: auto;
+  width: 6rem;
   padding: 0 1.5rem;
   cursor: pointer;
   font-size: 1.4rem;
-  font-weight: 500;
+  font-weight: 600;
   transition: background-color 0.3s;
+  text-align: center;
+  border: 2px solid #ffffff;
+}
+
+:root.light-mode .room__message > form > button {
+  background-color: #c31d1d;
+  border: 2px solid #000000;
 }
 
 .room__message > form > button:hover {
@@ -1337,3 +1367,22 @@ a {
   opacity: 0.8;
 }
 
+.delete-button {
+  background-color: #ff4d4d;
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.3rem 0.8rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.delete-button:hover {
+  background-color: #e60000;
+}
+
+.delete-form {
+  margin-left: 1rem;
+  display: inline-block;
+}

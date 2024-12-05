@@ -2,19 +2,33 @@
 
 
 :root {
-  --color-main: #ffffff; /* White */
-  --color-main-light: #f0f0f0; /* Light White */
-  --color-dark: #000000; /* Black */
-  --color-dark-medium: #333333; /* Medium Black */
-  --color-dark-light: #4d4d4d; /* Light Black */
-  --color-light: #ffffff; /* White */
-  --color-gray: #666666; /* Gray */
-  --color-light-gray: #999999; /* Light Gray */
-  --color-bg: #000000; /* Black */
-  --color-success: #b3b3b3; /* Gray Success */
-  --color-error: #b3b3b3; /* Gray Error */
+  --color-main: #ffffff; /* Primary color - white */
+  --color-main-light: #d9d9d9; /* Light variant of white */
+  --color-dark: #000000; /* Dark color - black */
+  --color-dark-medium: #6c2951; /* Medium dark */
+  --color-dark-light: #7661aa; /* Lighter black/gray */
+  --color-light: #f5f5f5; /* Light gray */
+  --color-gray: #bc6814; /* Medium gray */
+  --color-light-gray: #cccccc; /* Lighter gray */
+  --color-bg: #1a1a1a; /* Background - dark gray */
+  --color-success: #d9d9d9; /* Success color - light gray */
+  --color-error: #ffffff; /* Error color - white */
 }
 
+:root.light-mode {
+  --color-main: #da0c0c;
+  --color-main-light: #333333;
+  --color-dark: #efeded;
+  --color-diff:#6f2282;
+  --color-dark-medium: #cccccc;
+  --color-dark-light: #ff0000;
+  --color-light: #f5f5f5;
+  --color-gray: #000000;
+  --color-light-gray: #5c20b2;
+  --color-bg: #ffffff;
+  --color-success: #4caf50;
+  --color-error: #f44336;
+}
 /*========== base styles ==========*/
 
 * {

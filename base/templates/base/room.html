@@ -18,7 +18,7 @@
           </a>
           <h3>Study Room</h3>
         </div>
-        <button id="theme-toggle" class="btn btn--pill">Toggle Dark Mode</button>
+        <button id="theme-toggle" class="btn btn--pill">Toggle Theme</button>
         <a href="{% url 'delete-room' room.id %}" class="btn btn-danger">Delete</a>
 
         {% if room.host == request.user %}
@@ -135,5 +135,6 @@
     <!-- End -->
   </div>
 </main>
-<script src="{% static 'js/theme-toggle.js' %}"></script>
+<script src="{% static 'js/theme-toggle.js' %}"></script> 
+
 {% endblock %}
