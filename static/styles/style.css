@@ -470,7 +470,7 @@ a {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -46%);
-  background-color: var(--color-dark);
+  background-color: rgba(0, 0, 0, 0.4); /* Semi-transparent background */
   border-radius: 1rem;
   box-shadow: 1px 1px 6px 3px rgba(0, 0, 0, 0.1);
   overflow: hidden;
@@ -479,7 +479,7 @@ a {
 .layout__boxHeader {
   display: flex;
   padding: 1.5rem;
-  background-color: var(--color-dark-light);
+  background-color: rgba(118, 97, 170, 0.4);
 }
 
 .layout__boxTitle {
@@ -491,7 +491,7 @@ a {
 .layout__boxTitle h3 {
   text-transform: uppercase;
   font-weight: 500;
-  color: var(--color-light);
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .layout__boxTitle svg {
@@ -861,6 +861,21 @@ a {
 /*==============================
 =>  Auth
 ================================*/
+
+/* styles.css */
+.auth-page {
+  position: relative;
+  background-image: url('/static/images/bg.jpg'); /* Replace with your image path */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh; /* Full height of the viewport */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
 
 .auth__tagline {
   text-align: center;
