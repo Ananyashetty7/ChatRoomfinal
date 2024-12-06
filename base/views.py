@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -16,14 +17,71 @@ def linkify(text):
     return url_pattern.sub(r'<a href="\1" target="_blank">\1</a>', text)
 
 # Utility function to render centralized messages
+
 def render_center_message(request, message, redirect_url):
     """
-    Utility function to render a centralized message with an 'OK' button.
+    Render a simple centered message box inline without a separate template.
     """
-    return render(request, 'base/message_center.html', {
-        'message': message,
-        'redirect_url': redirect_url
-    })
+    html = f"""
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Message</title>
+        <style>
+            html, body {{
+                height: 100%;
+                margin: 0;
+                font-family: Arial, sans-serif;
+                background-image: url('/static/images/bg.jpg');
+                background-size: cover;
+                background-position: center;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }}
+            .message-container {{
+                text-align: center;
+                padding: 40px;
+                background: rgba(255, 255, 255, 0.9);
+                border: 1px solid #ddd;
+                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
+                border-radius: 15px;
+                width: 80%; /* Increased width */
+                max-width: 600px; /* Increased maximum width */
+            }}
+            .message-container h2 {{
+                margin-bottom: 20px;
+                font-size: 22px; /* Increased font size */
+                color: #333;
+            }}
+            .message-container button {{
+                padding: 12px 25px;
+                background-color: #000;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                font-size: 16px;
+                cursor: pointer;
+            }}
+            .message-container button:hover {{
+                background-color: #444;
+            }}
+        </style>
+    </head>
+    <body>
+        <div class="message-container">
+            <h2>{message}</h2>
+            <form action="{redirect_url}">
+                <button type="submit">OK</button>
+            </form>
+        </div>
+    </body>
+    </html>
+    """
+    return HttpResponse(html)
+
 
 # Login page
 def loginPage(request):
@@ -38,7 +96,7 @@ def loginPage(request):
         try:
             user = User.objects.get(email=email)
         except:
-            return render_center_message(request, 'User does not exist', 'login')
+            return render_center_message(request, 'User does not exist', reverse('login'))
 
         user = authenticate(request, email=email, password=password)
 
@@ -46,14 +104,14 @@ def loginPage(request):
             login(request, user)
             return redirect('home')
         else:
-            return render_center_message(request, 'Username OR password does not exist', 'login')
+            return render_center_message(request, 'Username OR password does not exist', reverse('login'))
 
     context = {'page': page}
     return render(request, 'base/login_register.html', context)
 
 def logoutUser(request):
     logout(request)
-    return render_center_message(request, 'You have been logged out successfully.', 'home')
+    return render_center_message(request, 'You have been logged out successfully.',  reverse('home'))
 
 def registerPage(request):
     form = MyUserCreationForm()
@@ -65,9 +123,9 @@ def registerPage(request):
             user.username = user.username.lower()
             user.save()
             login(request, user)
-            return render_center_message(request, 'Registration successful! Welcome to the platform.', 'home')
+            return render_center_message(request, 'Registration successful! Welcome to the platform.',  reverse('home'))
         else:
-            return render_center_message(request, 'An error occurred during registration. Please try again.', 'register')
+            return render_center_message(request, 'An error occurred during registration. Please try again.', reverse('register'))
 
     return render(request, 'base/login_register.html', {'form': form})
 
@@ -139,7 +197,7 @@ def createRoom(request):
             name=request.POST.get('name'),
             description=request.POST.get('description'),
         )
-        return render_center_message(request, 'Room created successfully.', 'home')
+        return render_center_message(request, 'Room created successfully.', reverse('home'))
 
     context = {'form': form, 'topics': topics}
     return render(request, 'base/room_form.html', context)
@@ -164,18 +222,14 @@ def updateRoom(request, pk):
     context = {'form': form, 'topics': topics, 'room': room}
     return render(request, 'base/room_form.html', context)
 
-@login_required(login_url='login')
-def deleteMessage(request, pk):
+@login_required
+def delete_message(request, pk):
     message = get_object_or_404(Message, id=pk)
-
-    if request.user != message.user:
-        return render_center_message(request, 'You are not allowed to delete this message.', 'home')
-
-    if request.method == 'POST':
+    if request.user == message.user or request.user == message.room.host:
         message.delete()
-        return render_center_message(request, 'Message deleted successfully.', 'home')
-
-    return render(request, 'base/delete.html', {'obj': message})
+        return render_center_message(request, "Message deleted successfully!", reverse('room', kwargs={'pk': message.room.id}))
+    else:
+        return render_center_message(request, "You are not authorized to delete this message.", reverse('room', kwargs={'pk': message.room.id}))
 
 @login_required(login_url='login')
 def updateUser(request):
@@ -186,9 +240,9 @@ def updateUser(request):
         form = UserForm(request.POST, request.FILES, instance=user)
         if form.is_valid():
             form.save()
-            return render_center_message(request, 'Your profile has been updated successfully.', f'user-profile/{user.id}')
+            return render_center_message(request, 'Your profile has been updated successfully.', reverse('user-profile', args=[user.id]))
         else:
-            return render_center_message(request, 'There was an error updating your profile. Please try again.', 'update-user')
+            return render_center_message(request, 'There was an error updating your profile. Please try again.', reverse('update-user'))
 
     return render(request, 'base/update-user.html', {'form': form})
 
@@ -208,8 +262,10 @@ def delete_room(request, pk):
     if request.user == room.host:
         if request.method == 'POST':
             room.delete()
-            return render_center_message(request, f'Room "{room.name}" deleted successfully.', 'home')
+            return render_center_message(request, f'Room "{room.name}" deleted successfully.', reverse('home'))
+
 
         return render(request, 'base/delete_confirm.html', {'room': room})
 
-    return render_center_message(request, 'You are not the host of this room and cannot delete it.', 'home')
+    return render_center_message(request, 'You are not the host of this room and cannot delete it.', reverse('home'))
+
