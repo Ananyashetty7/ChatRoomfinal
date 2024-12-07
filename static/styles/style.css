@@ -1242,16 +1242,18 @@ a {
   align-items: center;
   gap: 1rem; /* Add space between input and button */
 }
+
 :root.light-mode .room__message {
-  background: #efeded ;
+  background: #efeded;
 }
+
 .room__message > form {
   display: flex;
-  flex: 1; /* Ensure the input takes most of the space */
+  flex: 1; /* Ensure the form takes up all available space */
   align-items: center;
 }
 
-.room__message > form > input {
+.room__message > form > input[type="text"] {
   resize: none;
   background-color: var(--color-dark-light);
   color: var(--color-light);
@@ -1259,25 +1261,34 @@ a {
   outline: none;
   border-radius: 0.7rem;
   height: 4.5rem;
-  flex-grow: 1; /* Make the input expand to occupy available space */
+  flex-grow: 3; /* Make the message box take up more space */
   padding: 1.2rem;
   font-size: 1.4rem;
-  font-weight: 500;
+  font-weight: 600;
 }
 
-.room__message > form > input::placeholder {
+.room__message > form > input[type="text"]::placeholder {
   color: var(--color-light-gray);
 }
 
+.room__message > form > input[type="file"] {
+  width: 16rem; /* Make the file upload box smaller */
+  background-color: var(--color-dark-light);
+  color: var(--color-light);
+  border-radius: 0.7rem;
+}
+
 .room__message > form > input[type="file"]::-webkit-file-upload-button {
-  background-color:  rgb(181, 49, 168); /* Desired color for the clickable button */
+  background-color: rgb(181, 49, 168); /* Desired color for the clickable button */
   color: #fff; /* Text color */
   border: 2px solid rgb(188, 175, 186); /* Border color */
-  border-radius: 0.5rem; /* Rounded corners */
-  padding: 0.5rem 1rem; /* Button padding */
-  font-size: 1rem; /* Font size */
+  border-radius: 0.7rem; /* Rounded corners */
+  height: 4.5rem; /* Match the send button height */
+  width: 6rem; /* Match the send button width */
+  font-size: 0.9rem; /* Font size */
   cursor: pointer; /* Pointer cursor for hover effect */
   transition: background-color 0.3s ease; /* Smooth hover effect */
+  font-weight: 600;
 }
 
 .room__message > form > input[type="file"]::-webkit-file-upload-button:hover {
@@ -1317,6 +1328,7 @@ a {
 .room__message > form > button:hover {
   background-color: var(--color-light-gray);
 }
+
 
 .participants__top span {
   color: var(--color-main);
