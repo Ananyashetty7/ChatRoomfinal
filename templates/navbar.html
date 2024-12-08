@@ -2,8 +2,9 @@
 <header class="header header--loggedIn">
     <div class="container">
         <a href="{% url 'home' %}" class="header__logo">
-            <img src="{% static 'images/logo.svg' %}" />
-            <h1>Chat Room</h1>
+            <!-- Replace the svg logo with chat.jpg -->
+            <img src="{% static 'images/logo.jpeg' %}" alt="Code Flow Logo" />
+            <h1>CODE FLOW</h1>
         </a>
         <form class="header__search" method="GET" action="{% url 'home' %}">
             <label>
@@ -17,8 +18,6 @@
             </label>
         </form>
         <nav class="header__menu">
-
-
             <!-- Logged In -->
             {% if request.user.is_authenticated %}
             <div class="header__user">
@@ -36,7 +35,6 @@
                 </button>
             </div>
             {% else %}
-
             <!-- Not Logged In -->
             <a href="{% url 'login' %}">
                 <img src="{% static 'images/avatar.svg' %}" />
@@ -67,13 +65,4 @@
             </div>
         </nav>
     </div>
-</header>
-
-
-
-<!-- {% if request.user.is_authenticated %}
-<p>Hello {{request.user}}</p>
-<a href="{% url 'logout' %}">Logout</a>
-{% else %}
-<a href="{% url 'login' %}">Login</a>
-{% endif %} -->
+</header> 

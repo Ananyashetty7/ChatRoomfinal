@@ -1,17 +1,32 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap");
 
 :root {
-  --color-main: #71c6dd;
-  --color-main-light: #e1f6fb;
-  --color-dark: #3f4156;
-  --color-dark-medium: #51546e;
-  --color-dark-light: #696d97;
-  --color-light: #e5e5e5;
-  --color-gray: #8b8b8b;
-  --color-light-gray: #b2bdbd;
-  --color-bg: #2d2d39;
-  --color-success: #5dd693;
-  --color-error: #fc4b0b;
+  --color-main: #ffffff; /* Primary color - white */
+  --color-main-light: #d9d9d9; /* Light variant of white */
+  --color-dark: #000000; /* Dark color - black */
+  --color-dark-medium: #6c2951; /* Medium dark */
+  --color-dark-light: #7661aa; /* Lighter black/gray */
+  --color-light: #f5f5f5; /* Light gray */
+  --color-gray: #bc6814; /* Medium gray */
+  --color-light-gray: #cccccc; /* Lighter gray */
+  --color-bg: #1a1a1a; /* Background - dark gray */
+  --color-success: #469f49; /* Success color - light gray */
+  --color-error: #f44336; /* Error color - white */
+}
+
+:root.light-mode {
+  --color-main: #da0c0c;
+  --color-main-light: #333333;
+  --color-dark: #efeded;
+  --color-diff:#6f2282;
+  --color-dark-medium: #cccccc;
+  --color-dark-light: #7661aa;
+  --color-light: #f5f5f5;
+  --color-gray: #000000;
+  --color-light-gray: #5c20b2;
+  --color-bg: #ffffff;
+  --color-success: #4caf50;
+  --color-error: #f44336;
 }
 
 /*========== base styles ==========*/
@@ -23,8 +38,6 @@
   padding: 0;
   box-sizing: border-box;
   text-rendering: optimizeLegibility;
-  /* color: inherit; */
-  font-size: inherit;
 }
 
 html {
@@ -84,7 +97,7 @@ a {
 }
 /* Delete button styles */
 .btn-danger {
-  background-color:#71c6dd;
+  background-color:#040708;
   color: #fff;
   border: none;
   padding: 6px 12px;
@@ -96,7 +109,7 @@ a {
 }
 
 .btn-danger:hover {
-  background-color:#bfedf9;
+  background-color:#000000;
 }
 
 .inline-form {
@@ -120,7 +133,10 @@ a {
   background-color: var(--color-main);
   color: var(--color-dark);
 }
-
+:root .btn--main {
+  background-color: var(--color-main);
+  color: var(--color-dark);
+}
 .btn:hover {
   opacity: 0.9;
 }
@@ -312,7 +328,11 @@ a {
 .header__logo > h1 {
   font-weight: 700;
   font-size: 2rem;
-  color: var(--color-light);
+  background-image: linear-gradient(45deg, #F58529, #DD2A7B, #8134AF, #515BD4);
+  -webkit-background-clip: text;  /* Webkit-specific version */
+    background-clip: text;  /* Standard version */
+  color: transparent;
+  font-weight: bold;
 }
 
 .header__search > label {
@@ -451,7 +471,7 @@ a {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -46%);
-  background-color: var(--color-dark);
+  background-color: rgba(0, 0, 0, 0.4); /* Semi-transparent background */
   border-radius: 1rem;
   box-shadow: 1px 1px 6px 3px rgba(0, 0, 0, 0.1);
   overflow: hidden;
@@ -460,7 +480,7 @@ a {
 .layout__boxHeader {
   display: flex;
   padding: 1.5rem;
-  background-color: var(--color-dark-light);
+  background-color: rgba(118, 97, 170, 0.4);
 }
 
 .layout__boxTitle {
@@ -472,7 +492,7 @@ a {
 .layout__boxTitle h3 {
   text-transform: uppercase;
   font-weight: 500;
-  color: var(--color-light);
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .layout__boxTitle svg {
@@ -499,7 +519,7 @@ a {
 /*==============================
 =>  Topics
 ================================*/
-
+  
 .form__group {
   margin-bottom: 2rem;
   width: 100%;
@@ -528,7 +548,6 @@ a {
   font-weight: 500;
   outline: none;
 }
-
 .form__group input:focus,
 .form__group textarea:focus {
   border-color: var(--color-main);
@@ -573,6 +592,77 @@ a {
 .form__avatar label:hover {
   text-decoration: underline;
 }
+/* Modal Background */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Modal Content */
+.modal__content {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+/* Close Button */
+.modal__close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #333;
+}
+
+/* Modal Title */
+.modal__title {
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    color: #333;
+}
+
+/* Buttons */
+.btn--main {
+    background-color: #ff5c5c;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn--main:hover {
+    background-color: #1ab129;
+}
+
+.btn--secondary {
+    background-color: #ccc;
+    color: #333;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 1rem;
+}
+
+.btn--secondary:hover {
+    background-color: #b5b5b5;
+}
+
 
 /*==============================
 =>  Topics
@@ -655,7 +745,9 @@ a {
   color: var(--color-light);
   letter-spacing: 1px;
 }
-
+:root.light-mode .roomList__header h2 {
+  color: #0f782d; /* Black text in light mode */
+}
 .roomList__header p {
   font-weight: 500;
   color: var(--color-dark-light);
@@ -710,7 +802,7 @@ a {
   font-size: 2rem;
   font-weight: 500;
   margin-bottom: 1.5rem;
-  color: var(--color-light);
+  color: var(--color-diff);
   transition: all 0.3s ease-in-out;
 }
 
@@ -768,7 +860,10 @@ a {
   letter-spacing: 1px;
   font-size: 1.4rem;
 }
-
+:root.light-mode .activities__header h2 {
+  background-color: #b9b9b9;
+  color: #000000; /* Black text in light mode */
+}
 .activities__box {
   margin: 1.5rem;
   padding: 1.5rem;
@@ -838,6 +933,21 @@ a {
 /*==============================
 =>  Auth
 ================================*/
+
+/* styles.css */
+.auth-page {
+  position: relative;
+  background-image: url('/static/images/bg.jpg'); /* Replace with your image path */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh; /* Full height of the viewport */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
 
 .auth__tagline {
   text-align: center;
@@ -1127,10 +1237,23 @@ a {
   bottom: 0;
   left: 0;
   right: 0;
-  background: transparent;
+  background: #000000;
+  display: flex; /* Use flexbox to arrange input and button */
+  align-items: center;
+  gap: 1rem; /* Add space between input and button */
 }
 
-.room__message > form > input {
+:root.light-mode .room__message {
+  background: #efeded;
+}
+
+.room__message > form {
+  display: flex;
+  flex: 1; /* Ensure the form takes up all available space */
+  align-items: center;
+}
+
+.room__message > form > input[type="text"] {
   resize: none;
   background-color: var(--color-dark-light);
   color: var(--color-light);
@@ -1138,17 +1261,74 @@ a {
   outline: none;
   border-radius: 0.7rem;
   height: 4.5rem;
-  width: 100%;
-  margin-top: -1rem;
+  flex-grow: 3; /* Make the message box take up more space */
   padding: 1.2rem;
   font-size: 1.4rem;
-  font-weight: 500;
-  position: relative;
+  font-weight: 600;
 }
 
-.room__message > form > input::placeholder {
+.room__message > form > input[type="text"]::placeholder {
   color: var(--color-light-gray);
 }
+
+.room__message > form > input[type="file"] {
+  width: 16rem; /* Make the file upload box smaller */
+  background-color: var(--color-dark-light);
+  color: var(--color-light);
+  border-radius: 0.7rem;
+}
+
+.room__message > form > input[type="file"]::-webkit-file-upload-button {
+  background-color: rgb(181, 49, 168); /* Desired color for the clickable button */
+  color: #fff; /* Text color */
+  border: 2px solid rgb(188, 175, 186); /* Border color */
+  border-radius: 0.7rem; /* Rounded corners */
+  height: 4.5rem; /* Match the send button height */
+  width: 6rem; /* Match the send button width */
+  font-size: 0.9rem; /* Font size */
+  cursor: pointer; /* Pointer cursor for hover effect */
+  transition: background-color 0.3s ease; /* Smooth hover effect */
+  font-weight: 600;
+}
+
+.room__message > form > input[type="file"]::-webkit-file-upload-button:hover {
+  background-color: rgb(0, 0, 0); /* Change color on hover */
+}
+
+:root.light-mode .room__message > form > input[type="file"]::-webkit-file-upload-button {
+  background-color: #c31d1d;
+  color: #ffffff; /* Light theme text color */
+  border: 2px solid #888; /* Light theme border */
+}
+
+:root.light-mode .room__message > form > input[type="file"]::-webkit-file-upload-button:hover {
+  background-color: rgb(200, 200, 200); /* Hover color in light mode */
+}
+
+.room__message > form > button {
+  background-color: rgb(181, 49, 168);
+  color: var(--color-light);
+  border-radius: 0.7rem;
+  height: 4.5rem;
+  width: 6rem;
+  padding: 0 1.5rem;
+  cursor: pointer;
+  font-size: 1.4rem;
+  font-weight: 600;
+  transition: background-color 0.3s;
+  text-align: center;
+  border: 2px solid #ffffff;
+}
+
+:root.light-mode .room__message > form > button {
+  background-color: #c31d1d;
+  border: 2px solid #000000;
+}
+
+.room__message > form > button:hover {
+  background-color: var(--color-light-gray);
+}
+
 
 .participants__top span {
   color: var(--color-main);
@@ -1186,3 +1366,147 @@ a {
   color: var(--color-main);
   font-weight: 1.4rem;
 }
+
+.message-pane {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #f9f9f9;
+  border-top: 1px solid #ddd;
+  padding: 10px;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  display: flex; /* Use flexbox to arrange children */
+  align-items: center;
+  gap: 10px; /* Add space between textarea and button */
+}
+
+.message-pane textarea {
+  flex-grow: 1; /* Make the textarea take the available space */
+  height: 40px;
+  border-radius: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  resize: none;
+  outline: none;
+}
+
+.message-pane button {
+  width: 80px; /* Adjust width as needed */
+  height: 42px;
+  border: none;
+  border-radius: 20px;
+  background-color: #4caf50;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.message-pane button:hover {
+  background-color: #45a049;
+}
+
+/* Style for the message panel */
+.message-panel {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-size: 20px;
+  font-weight: bold;
+  z-index: 9999;
+  width: 60%;
+  text-align: center;
+}
+
+.message-panel-success {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.message-panel-error {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.message-panel button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.message-panel button:hover {
+  background-color: #0056b3;
+}
+   
+#theme-toggle {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1000;
+  font-size: 1.2rem; /* Reduced font size */
+  padding: 1rem 1rem; /* Reduced padding */
+  background-color: var(--color-main);
+  color: var(--color-dark);
+  border: 3px solid var(--color-gray);
+  border-radius: 2rem; /* Smaller border radius */
+  cursor: pointer;
+}
+
+#theme-toggle:hover {
+  opacity: 0.8;
+}
+
+.delete-button {
+  background-color: #8a0000;
+  color: #000000;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.3rem 0.8rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.delete-button:hover {
+  background-color: #e60000;
+}
+
+.delete-form {
+  margin-left: 1rem;
+  display: inline-block;
+}
+.thread__delete-form {
+  margin-left: 1rem;
+  display: inline-block;
+}
+
+.btn--danger {
+  background-color: #b4aeae;
+  color: rgb(0, 0, 0);
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn--danger:hover {
+  background-color: #e04a4a;
+}
+
+.btn--small {
+  font-size: 0.8rem;
+  padding: 0.3rem 0.8rem;
+}
+
+

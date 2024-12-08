@@ -1,0 +1,78 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<div class="message-container">
+    <div class="message-box">
+        <h2>{{ message }}</h2>
+        <form action="{% url redirect_url %}">
+            <button type="submit">OK</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block styles %}
+<style>
+    /* Center everything in the page */
+    html, body {
+        height: 100%; /* Full height of the viewport */
+        margin: 0;
+        display: flex;
+        justify-content: center; /* Horizontally center */
+        align-items: center; /* Vertically center */
+        font-family: Arial, sans-serif; /* Optional: Make the font uniform */
+    }
+
+    /* Ensure body takes at least full viewport height */
+    body {
+        min-height: 100vh;
+    }
+
+    /* Message container styles */
+    .message-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+    }
+
+    /* Box for messages */
+    .message-box {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 50px; /* Increase padding for the box */
+        background: white;
+        border: 2px solid #ddd;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Shadow for the box */
+        border-radius: 10px;
+        width: 500px; /* Fixed width for the box */
+        max-width: 90%; /* Make it responsive on smaller screens */
+    }
+
+    /* Header (message) styles */
+    .message-box h2 {
+        color: #333;
+        margin-bottom: 40px; /* Space between the message and button */
+        font-size: 30px; /* Larger font size for the message */
+    }
+
+    /* Button styles */
+    .message-box button {
+        padding: 15px 30px; /* Larger padding for the button */
+        font-size: 18px; /* Larger font size for the button */
+        color: white;
+        background-color: #000000;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+
+    .message-box button:hover {
+        background-color: #5f6163; /* Button hover effect */
+    }
+</style>
+{% endblock %}

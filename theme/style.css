@@ -1,19 +1,34 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap");
 
+
 :root {
-  --color-main: #71c6dd;
-  --color-main-light: #e1f6fb;
-  --color-dark: #3f4156;
-  --color-dark-medium: #51546e;
-  --color-dark-light: #696d97;
-  --color-light: #e5e5e5;
-  --color-gray: #8b8b8b;
-  --color-light-gray: #b2bdbd;
-  --color-bg: #2d2d39;
-  --color-success: #5dd693;
-  --color-error: #fc4b0b;
+  --color-main: #ffffff; /* Primary color - white */
+  --color-main-light: #d9d9d9; /* Light variant of white */
+  --color-dark: #000000; /* Dark color - black */
+  --color-dark-medium: #6c2951; /* Medium dark */
+  --color-dark-light: #7661aa; /* Lighter black/gray */
+  --color-light: #f5f5f5; /* Light gray */
+  --color-gray: #bc6814; /* Medium gray */
+  --color-light-gray: #cccccc; /* Lighter gray */
+  --color-bg: #1a1a1a; /* Background - dark gray */
+  --color-success: #d9d9d9; /* Success color - light gray */
+  --color-error: #ffffff; /* Error color - white */
 }
 
+:root.light-mode {
+  --color-main: #da0c0c;
+  --color-main-light: #333333;
+  --color-dark: #efeded;
+  --color-diff:#6f2282;
+  --color-dark-medium: #cccccc;
+  --color-dark-light: #ff0000;
+  --color-light: #f5f5f5;
+  --color-gray: #000000;
+  --color-light-gray: #5c20b2;
+  --color-bg: #ffffff;
+  --color-success: #4caf50;
+  --color-error: #f44336;
+}
 /*========== base styles ==========*/
 
 * {
@@ -629,7 +644,7 @@ a {
 .roomList__header h2 {
   text-transform: uppercase;
   font-weight: 500;
-  color: var(--color-light);
+  color: var(--color-main);
   letter-spacing: 1px;
 }
 
