@@ -999,7 +999,6 @@ a {
 
 .profile__info h3 {
   font-size: 2rem;
-  color: var(--color-light);
   font-weight: 400;
 }
 
@@ -1015,7 +1014,6 @@ a {
 
 .profile__about h3 {
   text-transform: uppercase;
-  color: var(--color-dark-light);
   margin-bottom: 0.5rem;
 }
 
